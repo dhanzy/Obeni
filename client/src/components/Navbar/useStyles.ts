@@ -20,7 +20,24 @@ const useStyles = makeStyles((theme) => ({
                 color: theme.palette.secondary.light,
             },
         },
-        
+        [theme.breakpoints.down('sm')]: {
+            display: 'flex',
+            flexDirection: 'column',
+            width: '100%',
+            position: 'fixed',
+            backgroundColor: '#fff',
+            right: 0,
+            transition: 'all .5s ease',
+            overflow: 'hidden',
+            paddingDown: 0,
+            '& a, & button': {
+                borderBottom: '1px solid #efefef',
+                borderRadius: 0,
+                color: '#000',
+                paddingTop: '20px',
+                paddingBottom: '20px',
+            },
+        },
     },
 }))
 

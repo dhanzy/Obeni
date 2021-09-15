@@ -9,7 +9,7 @@ const Footer = () => {
     const year = new Date().getFullYear()
     return (
         <Box p={5} className={classes.root}>
-            <Grid container>
+            <Grid container spacing={2}>
                 <Grid item lg={3}>
                     <Box>
                         <Typography variant="h4">Information</Typography>
@@ -26,7 +26,7 @@ const Footer = () => {
                             <Typography component="p">Telephone: +234 123456789</Typography>
                         </Link>
                         <Link to="#">
-                            <Typography component="p">Email: +234 123456789</Typography>
+                            <Typography component="p">Email: info@ogbeni.com</Typography>
                         </Link>
                     </Box>
                 </Grid>

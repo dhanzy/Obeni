@@ -18,7 +18,7 @@ const useStyles = makeStyles(() => ({
     },
     sidePanel: {
         position: 'sticky',
-        top: 80,
+        top: 20,
     },
 }))
 

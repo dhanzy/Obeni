@@ -1,6 +1,6 @@
-import { createTheme } from '@material-ui/core';
+import { createTheme, responsiveFontSizes } from '@material-ui/core';
 
-export const theme = createTheme({
+let theme = createTheme({
     typography: {
         fontFamily: ['Montserrat', 'sans-serif'].join(','),       
         fontSize: 14,
@@ -37,3 +37,5 @@ export const theme = createTheme({
         },
     },
 })
+
+export default theme = responsiveFontSizes(theme)

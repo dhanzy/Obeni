@@ -1,6 +1,11 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles( () => ({
+const useStyles = makeStyles((theme) => ({
+    productImage: {
+        borderRadius: '50%',
+        width: '100px',
+        height: '100px',
+    },
     paymentInfo: {
         position: 'sticky',
         top: '20px',
@@ -10,16 +15,6 @@ const useStyles = makeStyles( () => ({
         '& input': {
             color: '#fff',
         },
-    },
-    cartQtyInput: {
-        border: '1px solid #efefef',
-        width: '50px',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'center',
-        '& input': {
-            textAlign: 'center',
-        }
     },
     shippingModeTitle: {
         marginBottom: '30px',

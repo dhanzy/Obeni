@@ -28,16 +28,20 @@ const Checkout = ():JSX.Element => {
                                     <Input id="billing-address" type="text" />
                                 </FormControl>
                                 <FormControl fullWidth className={classes.margin}>
-                                    <InputLabel htmlFor="billing-address">Town/City</InputLabel>
-                                    <Input id="billing-address" type="text" />
+                                    <InputLabel htmlFor="billing-town">Town/City</InputLabel>
+                                    <Input id="billing-town" type="text" />
                                 </FormControl>
                                 <FormControl fullWidth className={classes.margin}>
-                                    <InputLabel htmlFor="billing-address">Phone</InputLabel>
-                                    <Input id="billing-address" type="text" />
+                                    <InputLabel htmlFor="billing-state">State/Country</InputLabel>
+                                    <Input id="billing-state" type="text" />
+                                </FormControl>
+                                <FormControl fullWidth className={classes.margin}>
+                                    <InputLabel htmlFor="billing-phone">Phone</InputLabel>
+                                    <Input id="billing-phone" type="phone" />
                                 </FormControl>
                                 <FormControl fullWidth className={classes.margin}>
                                     <InputLabel htmlFor="billing-email-address">Email Address</InputLabel>
-                                    <Input id="billing-email-address" type="text" />
+                                    <Input id="billing-email-address" type="email" />
                                 </FormControl>
                             </Box>
                             <Box mt={5}>

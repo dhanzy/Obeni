@@ -1,6 +1,6 @@
 import { makeStyles } from '@material-ui/core';
 
-const useStyles = makeStyles(() => ({
+const useStyles = makeStyles((theme) => ({
     root: {
         minHeight: '100vh',
     },
@@ -24,7 +24,12 @@ const useStyles = makeStyles(() => ({
     mainDesc: {
         position: 'absolute',
         bottom: '40%',
-        right: '10%',
+        right: '5%',
+        width: '30%',
+        [theme.breakpoints.down('xs')]: {
+            width: '45%',
+            bottom: '20%',
+        },
     },
     cardCollectionImage: {
         zIndex: 1,

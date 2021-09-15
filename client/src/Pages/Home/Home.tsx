@@ -1,7 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Button, Grid, Card, CardActionArea, CardMedia, CardContent, Tabs, Tab, Zoom, Grow } from '@material-ui/core';
-import VisibilitySensor from 'react-visibility-sensor';
+import { Box, Typography, Button, Grid, Card, CardActionArea, CardMedia, CardContent, Tabs, Tab, Fade, Grow } from '@material-ui/core';
+import Sensor from '../../components/Sensor/Sensor';
+import { MenData, WomenData } from '../../Dummydata/Data';
+
+// import { Zoom, Fade} from 'react-reveal';
 
 import useStyles from './useStyles';
 import ProductCard from '../../components/ProductCard/ProductCard';
@@ -12,7 +15,8 @@ interface TabPanelProps {
     value: number;
 }
 
-function TabPanel(props: TabPanelProps) {
+function TabPanel
+(props: TabPanelProps) {
     const { children, value, index, ...other } = props;
 
     return (
@@ -31,42 +35,42 @@ const Home = ():JSX.Element => {
 
     return (
         <Box className={classes.root}>
-            <VisibilitySensor>
-                {({isVisible}) => (
-                    <Box className={[classes.section, classes.homeSection].join(' ')}>
-                        <Zoom in={isVisible} style={{transitionDelay: isVisible ? '500ms' : '0ms' }}>
-                            <CardMedia component="img" image="https://images.pexels.com/photos/432059/pexels-photo-432059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-                        </Zoom>
-                        <Box className={classes.mainDesc}>
-                            <Typography variant="h1" color="secondary">Summer<br/>Collection</Typography>
-                            <Typography component="p">Introducing the most comfortable and popular brand ogbeni apparels collection</Typography>
-                            <Box mt={2}>
-                                <Button variant="contained" color="secondary">Shop Now</Button>
-                            </Box>                    
-                        </Box>
+                <Box className={[classes.section, classes.homeSection].join(' ')}>
+                    <Fade in={true} {...(true ? { timeout: 2000 } : {})} >
+                        <CardMedia component="img" image="https://images.pexels.com/photos/432059/pexels-photo-432059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
+                    </Fade>
+                    <Box className={classes.mainDesc}>
+                        <Typography variant="h1" color="secondary">Summer<br/>Collection</Typography>
+                        <Typography component="p">Introducing the most comfortable and popular brand ogbeni apparels collection</Typography>
+                        <Box mt={2}>
+                            <Button variant="contained" color="secondary">Shop Now</Button>
+                        </Box>                    
                     </Box>
-                )}
-            </VisibilitySensor>
+                </Box>
             <Box className={classes.section}>
-                <VisibilitySensor>
-                    {({isVisible}) => (
-                    <Box p={5}>
-                        <Grid container>
-                            <Grid item md={6} sm={6} xs={12} className={classes.cardCollectionImage} >
-                                <Grow in={isVisible}>
-                                    <Card>
-                                        <CardActionArea component={Link} to="/men">
-                                            <CardMedia component="img" image="https://images.pexels.com/photos/6652928/pexels-photo-6652928.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" height="350" />
-                                            <CardContent>
-                                                <Typography variant="h3">Men<br/>Collection</Typography>
-                                                <Button variant="outlined" color="primary">Shop Now</Button>
-                                            </CardContent>
-                                        </CardActionArea>
-                                    </Card>
-                                </Grow>
-                            </Grid>
-                            <Grid item md={6} sm={6} xs={12} className={classes.cardCollectionImage} >
-                                <Grow in={isVisible} style={{transformOrigin: '0 0 0'}} {...(isVisible ? { timeout: 1000 } : {})}>
+                <Box p={5}>
+                    <Grid container>
+                        <Grid item md={6} sm={6} xs={12} className={classes.cardCollectionImage} >
+                            <Sensor once>
+                                {({ isVisible }: any) => (
+                                    <Grow in={isVisible} style={{ transformOrigin: '0 0 0' }} >
+                                        <Card>
+                                            <CardActionArea component={Link} to="/men">
+                                                <CardMedia component="img" image="https://images.pexels.com/photos/6652928/pexels-photo-6652928.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" height="350" />
+                                                <CardContent>
+                                                    <Typography variant="h3">Men<br/>Collection</Typography>
+                                                    <Button variant="outlined" color="primary">Shop Now</Button>
+                                                </CardContent>
+                                            </CardActionArea>
+                                        </Card>
+                                    </Grow>
+                                )}
+                            </Sensor>
+                        </Grid>
+                        <Grid item md={6} sm={6} xs={12} className={classes.cardCollectionImage} >
+                            <Sensor once>
+                                {({ isVisible }: any) => (
+                                <Grow in={isVisible} style={{ transformOrigin: '0 0 0' }} {...(isVisible ? { timeout: 2000 } : {})} >
                                     <Card>
                                         <CardActionArea component={Link} to="women">
                                                 <CardMedia component="img" image="https://images.pexels.com/photos/3671083/pexels-photo-3671083.jpeg?auto=compress&cs=tinysrgb&h=750&w=1260" height="350"/>
@@ -77,11 +81,11 @@ const Home = ():JSX.Element => {
                                         </CardActionArea>
                                     </Card>
                                 </Grow>
-                            </Grid>
+                                )}
+                            </Sensor>
                         </Grid>
-                    </Box>
-                    )}
-                </VisibilitySensor>
+                    </Grid>
+                </Box>
             </Box>
             <Box className={classes.section}>
                 <Box>
@@ -117,23 +121,20 @@ const Home = ():JSX.Element => {
                         <Box>
                             <TabPanel index={0} value={value}>
                                 <Grid container spacing={2}>
-                                    <Grid item md={3} sm={6} xs={6}>
-                                        <ProductCard />
-                                    </Grid>
-                                    <Grid item md={3} sm={6} xs={6}>
-                                        <ProductCard />
-                                    </Grid>
-                                    <Grid item md={3} sm={6} xs={6}>
-                                        <ProductCard />
-                                    </Grid>
-                                    <Grid item md={3} sm={6} xs={6}>
-                                        <ProductCard />
-                                    </Grid>
+                                    {MenData.map((product, index) => (
+                                        <Grid item md={3} sm={6} xs={12} key={index}>
+                                            <ProductCard productPrice={product.productPrice} image={product.image} productTitle={product.productTitle} />
+                                        </Grid>
+                                    ))}
                                 </Grid>
                             </TabPanel>
                             <TabPanel index={1} value={value}>
-                                <Grid container>
-                                    <Grid item></Grid>
+                                <Grid container spacing={2}>
+                                    {WomenData.map((product, index) => (
+                                        <Grid item md={3} sm={6} xs={12} key={index}>
+                                            <ProductCard image={product.image} productPrice={product.productPrice} productTitle={product.productTitle} />
+                                        </Grid>
+                                    ))}
                                 </Grid>
                             </TabPanel>
                         </Box>

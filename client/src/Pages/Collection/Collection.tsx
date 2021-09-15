@@ -1,11 +1,21 @@
 import React from 'react'
-import { Box, Grid, Typography, CardMedia } from '@material-ui/core';
+import { Box, Grid, Typography, CardMedia, ButtonGroup, Button } from '@material-ui/core';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 import useStyles from './useStyles';
 import ProductCard from '../../components/ProductCard/ProductCard'
+import { ProductData } from '../../Dummydata/Data';
 
 const Collection = ():JSX.Element => {
     const classes = useStyles();
-
+    AOS.init({
+        offset: 200,
+        duration: 600,
+        easing: 'ease-in-sine',
+        delay: 100,
+    })
+    
     return (
         <Box>
             <Box className={classes.top}>
@@ -18,7 +28,7 @@ const Collection = ():JSX.Element => {
                     <Typography component="p">Checkout our collection</Typography>
                 </Box>
             </Box>
-            <Box>
+            <Box py={2} px={2}>
                 <Grid container spacing={1}>
                     <Grid item md={2} sm={2}>
                         <Box p={2} className={classes.sidePanel}>
@@ -29,37 +39,20 @@ const Collection = ():JSX.Element => {
                     </Grid>
                     <Grid item md={10} sm={10}>
                         <Grid container spacing={2}>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
-                            <Grid item md={4} sm={6}>
-                                <ProductCard />
-                            </Grid>
+                            {ProductData.map((product, index) => (
+                                <Grid item md={4} sm={6} data-aos="fade-up" key={index} >
+                                    <ProductCard image={product.image} productTitle={product.productTitle} productPrice={product.productPrice} />
+                                </Grid>
+                            ))}
                         </Grid>
+
+                        <Box py={5} display="flex" justifyContent="center">
+                            <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
+                                <Button>One</Button>
+                                <Button>Two</Button>
+                                <Button>Three</Button>
+                            </ButtonGroup>
+                        </Box>
                     </Grid>
                 </Grid>
             </Box>

@@ -10,7 +10,7 @@ import Collection from './Pages/Collection/Collection';
 import Cart from './Pages/Cart/Cart';
 import Checkout from './Pages/Checkout/Checkout'
 
-import { theme } from './Theme/theme';
+import theme from './Theme/theme';
 
 const App = (): JSX.Element => {
     return (
