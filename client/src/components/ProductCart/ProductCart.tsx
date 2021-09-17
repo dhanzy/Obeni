@@ -4,6 +4,7 @@ import { Add, Cancel, Remove } from '@material-ui/icons';
 
 import useStyles from './useStyles';
 import ProductCartProps from '../../Interface/ProductCart';
+import Currency from '../../components/Currency/Currency';
 
 
 const ProductCart:React.FC<ProductCartProps> = (props): JSX.Element => {
@@ -27,7 +28,7 @@ const ProductCart:React.FC<ProductCartProps> = (props): JSX.Element => {
             </TableCell>
             <TableCell>
                 <Box>
-                    <Typography><Box component="span"></Box>{props.productPrice}</Typography>
+                    <Typography><Box component="span"></Box><Currency />{(props.productPrice).toLocaleString()}</Typography>
                 </Box>
             </TableCell>
             <TableCell>

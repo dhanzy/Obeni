@@ -9,12 +9,12 @@ const ProductCard:React.FC<ProductCardProps> = (props): JSX.Element => {
     return (
         <Box>
             <Card>
-                <CardActionArea component={Link} to='/product'>
+                <CardActionArea component={Link} to={'/product/' + props.productName}>
                     <CardMedia component="img" image={props.image} height="400" />
                     <CardContent>
                         <Box>
-                            <Typography variant="h5">{props.productTitle}</Typography>
-                            <Typography variant="h5"><Box component="span"></Box><Currency />{props.productPrice}</Typography>
+                            <Typography variant="h5">{props.productName}</Typography>
+                            <Typography variant="h5"><Box component="span"></Box><Currency />{props.productPrice ? (props.productPrice).toLocaleString() : ''}</Typography>
                         </Box>
                     </CardContent>
                 </CardActionArea>

@@ -3,5 +3,5 @@ export default interface ProductCartProps {
     productName: string;
     productSize: string;
     productQuantity?: number;
-    productPrice: string;
+    productPrice: number;
 }

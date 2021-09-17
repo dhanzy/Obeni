@@ -123,7 +123,7 @@ const Home = ():JSX.Element => {
                                 <Grid container spacing={2}>
                                     {MenData.map((product, index) => (
                                         <Grid item md={3} sm={6} xs={12} key={index}>
-                                            <ProductCard productPrice={product.productPrice} image={product.image} productTitle={product.productTitle} />
+                                            <ProductCard productPrice={product.productPrice} image={product.image} productName={product.productName} />
                                         </Grid>
                                     ))}
                                 </Grid>
@@ -132,7 +132,7 @@ const Home = ():JSX.Element => {
                                 <Grid container spacing={2}>
                                     {WomenData.map((product, index) => (
                                         <Grid item md={3} sm={6} xs={12} key={index}>
-                                            <ProductCard image={product.image} productPrice={product.productPrice} productTitle={product.productTitle} />
+                                            <ProductCard image={product.image} productPrice={product.productPrice} productName={product.productName} />
                                         </Grid>
                                     ))}
                                 </Grid>

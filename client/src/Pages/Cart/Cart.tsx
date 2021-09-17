@@ -7,7 +7,8 @@ import { Box, Button, Typography, useMediaQuery, Table, TableHead, TableRow, Tab
 import useStyles from './useStyles';
 import { CartData } from '../../Dummydata/Data';
 import ProductCart from '../../components/ProductCart/ProductCart';
-
+import Currency from '../../components/Currency/Currency';
+import { config } from '../../config/config';
 
 
 const Cart = ():JSX.Element => {
@@ -46,7 +47,7 @@ const Cart = ():JSX.Element => {
                     </Table>
                     <Box p={2}>
                         <Box mt={2}>
-                            <Button variant="outlined" color="secondary">Continue Shopping</Button>
+                            <Button variant="outlined" color="secondary" component={Link} to='/collection'>Continue Shopping</Button>
                             <Button variant="outlined" color="secondary" style={{marginLeft: '20px'}}>Update Cart</Button>
                         </Box>
                     </Box>
@@ -68,15 +69,19 @@ const Cart = ():JSX.Element => {
                                             <TableBody>
                                                 <TableRow>
                                                     <TableCell>Subtotal</TableCell>
-                                                    <TableCell>25,000</TableCell>
+                                                    <TableCell><Currency />25,000</TableCell>
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell>Shipping</TableCell>
-                                                    <TableCell>Free</TableCell>
+                                                    <TableCell>{free ? 'Free' : (
+                                                        <>
+                                                            <Currency /> {(config.shipping).toLocaleString()}
+                                                        </>
+                                                        )} </TableCell>
                                                 </TableRow>
                                                 <TableRow>
                                                     <TableCell>Total</TableCell>
-                                                    <TableCell>Subtotal</TableCell>
+                                                    <TableCell><Currency />{free ? '25,000' : (25000 + config.shipping).toLocaleString() }</TableCell>
                                                 </TableRow>
                                             </TableBody>
                                         </Table>

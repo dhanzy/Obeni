@@ -1,14 +1,34 @@
 import React from 'react';
-import { Box, Grid, ButtonGroup, Typography, Button, Card, CardMedia, Input, Container } from '@material-ui/core';
+import { Box, Grid, Typography, Button, Card, CardMedia, Input, Container } from '@material-ui/core';
 import { Add, Remove } from '@material-ui/icons';
+import { useParams } from 'react-router-dom';
 
+import { ProductData } from '../../Dummydata/Data';
 import ProductCard from '../../components/ProductCard/ProductCard';
 import useStyles from './useStyles';
 import AdditionalImages from './AdditionalImages/AdditionalImages';
+import Currency from '../../components/Currency/Currency';
+
+interface ProductParams {
+    productName: string;
+}
+
 
 const Product = ():JSX.Element => {
     document.title = 'Ogbeni Apparels - Products'
+
+    const { productName } = useParams<ProductParams>()
     const classes = useStyles();
+
+    const product = ProductData.filter((prod: any) => { return prod.productName === productName})[0];
+    console.log(product);
+    if (!product) {
+        return (
+            <Box>
+                <Typography variant="h1">404</Typography>
+            </Box>
+        )
+    }
 
     return (
         <Container> 
@@ -24,15 +44,15 @@ const Product = ():JSX.Element => {
                                 </Box>
                                 <Box className={classes.selectedImage}>
                                     <Card>
-                                        <CardMedia component="img" image="https://images.pexels.com/photos/6652928/pexels-photo-6652928.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500" height="400"/>
+                                        <CardMedia component="img" image={product.image} height="400"/>
                                     </Card>
                                 </Box>
                             </Box>
                         </Grid>
                         <Grid item md={6}>
                             <Box>
-                                <Typography variant="h3">Leather Jacket</Typography>
-                                <Typography variant="h5">45,000</Typography>
+                                <Typography variant="h3">{ product.productName }</Typography>
+                                <Typography variant="h5"><Currency />{ product.productPrice ? (product.productPrice).toLocaleString() : '' }</Typography>
                                 <Box mt={2}>
                                     Lorem ipsum dolor sit amet consectetur adipisicing elit. 
                                     At tempora, alias inventore distinctio magni aut eligendi. 
@@ -42,20 +62,20 @@ const Product = ():JSX.Element => {
                                 <Box>
                                     <form method="post">
                                         <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
-                                            <Typography variant="h5">Size</Typography>
-                                            <ButtonGroup>
+                                            <Typography variant="h5">{ product.productSize }</Typography>
+                                            <Box display="flex">
                                                 <Button><Add /></Button>
                                                 <Input type="number" value="1"/>
                                                 <Button><Remove /></Button>
-                                            </ButtonGroup>
+                                            </Box>
                                         </Box>
                                         <Box mt={2} display="flex" justifyContent="space-between" alignItems="center">
                                             <Typography variant="h5">Quantity</Typography>
-                                            <ButtonGroup>
+                                            <Box>
                                                 <Button><Add /></Button>
                                                 <Input type="number" value="1"/>
                                                 <Button><Remove /></Button>
-                                            </ButtonGroup>
+                                            </Box>
                                         </Box>
                                         <Box mt={2}>
                                             <Button type="submit" variant="contained" color="secondary" fullWidth>Add to Cart</Button>

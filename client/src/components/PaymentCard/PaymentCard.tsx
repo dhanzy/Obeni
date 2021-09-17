@@ -1,54 +1,107 @@
 import React from 'react';
-import { Box, Typography, Tabs, Tab } from '@material-ui/core';
-import CreditCard from '../CreditCard/CreditCard';
-import PayPal from '../PayPal/PayPal';
+import { Box, Typography, CardMedia, Paper, Radio, TableContainer, Table, TableBody, TableFooter, TableRow, TableCell, Button } from '@material-ui/core';
+import { usePaystackPayment } from 'react-paystack';
+
 import useStyles from './useStyles';
-
-interface TabPanelProps {
-    children?: React.ReactNode;
-    index: number;
-    value: number;
-}
-
-function TabPanel(props: TabPanelProps) {
-    const { children, value, index, ...other } = props;
-
-    return (
-        <div hidden={value !== index} id={`landing-tab-panel-${index}`} aria-labelledby={`tab-${index}`} {...other}>
-            {value === index && <Box p={3}>{children}</Box>}
-        </div>
-    );
-}
+import PaystackImage from '../../Images/paystack-wc.png';
 
 const PaymentCard = () => {
     const classes = useStyles();
-    const [value, setValue] = React.useState(0);
-    const handleChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
-        setValue(newValue);
+    const publicKey = 'pk_test_a85d195cbad70934549a9d40387c1d1e03a07672'
+    const name = "Testing"
+    const phone = "08012345678"
+    const amount = 10000 * 100
+    const config = {
+        email:'test@gmail.com',
+        amount,
+        publicKey,
+        name,
+        phone,
+        text:'pay now', 
+    }
+    const onSuccess = () => { 
+        alert("Thanks for doing buisness with us!")
     };
-
+    const onClose = ()=> {
+        alert('Wait! you need this product, Don\'t go')
+    };
+    const initializePayment = usePaystackPayment(config)
     return (
-        <Box p={5} className={classes.paymentInfo}>
-            <Typography variant="h4">Payment Info</Typography>
-            <Box p={1}>
-                <Typography component="p">Payment Method</Typography>
+        <Box>
+            <Typography variant="h3">Your Order</Typography>
+            <Box mt={2}>
+                <TableContainer>
+                    <Table>
+                        <TableBody>
+                            <TableRow>
+                                <TableCell>
+                                    <Box className={classes.checkoutProductWrap}>
+                                        <Box className={classes.checkoutProductThumb}>
+                                            <CardMedia component="img" image="" height="150px" />
+                                        </Box>
+                                        <Box className={classes.checkoutProductName}>
+                                            Patterned Pocket Square Teal & orange
+                                            <Box component="strong"> x&nbsp;2</Box>
+                                        </Box>
+                                        <Box className={classes.checkoutProductTotal}>
+                                            35000
+                                        </Box>
+                                    </Box>
+                                </TableCell>
+                            </TableRow>
+                        </TableBody>
+                        <TableFooter className={classes.tableFooter}>
+                            <TableRow>
+                                <TableCell component="th">Subtotal</TableCell>
+                                <TableCell>35000</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell component="th">Shipping <br/>Flat Rate</TableCell>
+                                <TableCell>3000</TableCell>
+                            </TableRow>
+                            <TableRow>
+                                <TableCell component="th">Total</TableCell>
+                                <TableCell>60500</TableCell>
+                            </TableRow>
+                        </TableFooter>
+                    </Table>
+                </TableContainer>
             </Box>
-            <Box mt={1}>
-                <Tabs
-                value={value}
-                onChange={handleChange}
-                >
-                    <Tab label="Credit Card"></Tab>
-                    <Tab label="PayPal"></Tab>
-                </Tabs>
-                <Box>
-                    <TabPanel index={0} value={value}>
-                        <CreditCard />
-                    </TabPanel>
-                    <TabPanel index={1} value={value}>
-                        <PayPal />
-                    </TabPanel>
-                </Box>
+
+            <Box mt={5}>
+                <Paper>
+                    <Box>
+                        <Box className={classes.payment_method}>
+                            <Radio className="payment_method_paystack" value="paystack" />
+                            <label htmlFor="payment_method_paystack">
+                                Debit/Credit Cards
+                                <CardMedia component="img" image={PaystackImage} alt="Paystack Payment Options" />
+                            </label>
+                            
+                            <Box>
+                                <Typography component="p">Make payment using your debit and credit cards</Typography>
+                            </Box>
+                        </Box>
+                    </Box>
+                </Paper>
+            </Box>
+            <Box mt={5}>
+                <Typography component="p">
+                    Your personal data will be used to process your order, support your experience throughout this website, 
+                    and for other purposes described in our <a href="#" target="_blank">privacy policy</a>
+                </Typography>
+            </Box>
+            <Box mt={3}>
+                <Button 
+                    fullWidth 
+                    variant="contained" 
+                    color="secondary" 
+                    onClick={()=> {
+                        initializePayment(onSuccess, onClose)
+                    }}
+                    >
+                        Place Order
+                </Button>
             </Box>
         </Box>
     )

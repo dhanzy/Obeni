@@ -1,5 +1,6 @@
 export default interface ProductCardProps {
     image?: string;
-    productTitle?: string;
-    productPrice?: string;   
+    productName?: string;
+    productPrice?: Number;
+    productSize?: string;
 }

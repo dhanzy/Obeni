@@ -1,5 +1,7 @@
 import React from 'react'
-import { Box, Grid, Button, FormControl, Input, InputLabel } from '@material-ui/core';
+import { Box, Grid, FormControl, Input, InputLabel } from '@material-ui/core';
+
+
 import PaymentCard from '../../components/PaymentCard/PaymentCard';
 
 import useStyles from './useStyles';
@@ -11,7 +13,7 @@ const Checkout = ():JSX.Element => {
     return (
         <Box py={10} px={8}>
             <Grid container spacing={5}>
-                <Grid item md={6}>
+                <Grid item md={8}>
                     <form method="post">
                         <Box>
                             <FormControl className={[classes.margin, classes.textField, classes.marginRight].join(' ')}>
@@ -44,13 +46,10 @@ const Checkout = ():JSX.Element => {
                                     <Input id="billing-email-address" type="email" />
                                 </FormControl>
                             </Box>
-                            <Box mt={5}>
-                                <Button type="submit" variant="contained" color="secondary">Proceed</Button>
-                            </Box>
                         </Box>
                     </form>
                 </Grid>
-                <Grid item md={6}>
+                <Grid item md={4}>
                     <PaymentCard />
                 </Grid>
             </Grid>

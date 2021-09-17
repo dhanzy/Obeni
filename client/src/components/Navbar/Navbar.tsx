@@ -5,7 +5,7 @@ import { AppBar, Container, Toolbar, Box, Typography, Button, useScrollTrigger, 
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 
-
+import { CartData } from '../../Dummydata/Data';
 import useStyles from './useStyles';
 
 
@@ -92,7 +92,7 @@ const Navbar = (props: NavBarProps): JSX.Element => {
                                     <Search />
                                 </IconButton>
                                 <IconButton style={{color:'#fff'}} component={Link} to="/cart" className={location.pathname === "/cart" ? 'active' : ''}>
-                                    <Badge badgeContent={4} color="secondary">
+                                    <Badge badgeContent={CartData ? CartData.length : 0} color="secondary">
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>

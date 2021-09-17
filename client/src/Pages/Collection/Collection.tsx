@@ -14,6 +14,7 @@ const Collection = ():JSX.Element => {
         duration: 600,
         easing: 'ease-in-sine',
         delay: 100,
+        once: true
     })
     
     return (
@@ -41,7 +42,7 @@ const Collection = ():JSX.Element => {
                         <Grid container spacing={2}>
                             {ProductData.map((product, index) => (
                                 <Grid item md={4} sm={6} data-aos="fade-up" key={index} >
-                                    <ProductCard image={product.image} productTitle={product.productTitle} productPrice={product.productPrice} />
+                                    <ProductCard image={product.image} productName={product.productName} productPrice={product.productPrice} />
                                 </Grid>
                             ))}
                         </Grid>

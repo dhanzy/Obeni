@@ -22,7 +22,7 @@ const App = (): JSX.Element => {
                         <Navbar />
                         <Home />
                     </Route>
-                    <Route exact path="/product">
+                    <Route exact path="/product/:productName">
                         <Navbar dark={true} />
                         <Product />
                     </Route>
