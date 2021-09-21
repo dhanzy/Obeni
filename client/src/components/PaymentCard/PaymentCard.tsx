@@ -3,7 +3,10 @@ import { Box, Typography, CardMedia, Paper, Radio, TableContainer, Table, TableB
 import { usePaystackPayment } from 'react-paystack';
 
 import useStyles from './useStyles';
+import Currency from '../Currency/Currency';
 import PaystackImage from '../../Images/paystack-wc.png';
+import OrderProduct from '../OrderProduct/OrderProduct';
+import { CartData } from '../../Dummydata/Data';
 
 const PaymentCard = () => {
     const classes = useStyles();
@@ -33,35 +36,26 @@ const PaymentCard = () => {
                 <TableContainer>
                     <Table>
                         <TableBody>
-                            <TableRow>
-                                <TableCell>
-                                    <Box className={classes.checkoutProductWrap}>
-                                        <Box className={classes.checkoutProductThumb}>
-                                            <CardMedia component="img" image="" height="150px" />
-                                        </Box>
-                                        <Box className={classes.checkoutProductName}>
-                                            Patterned Pocket Square Teal & orange
-                                            <Box component="strong"> x&nbsp;2</Box>
-                                        </Box>
-                                        <Box className={classes.checkoutProductTotal}>
-                                            35000
-                                        </Box>
-                                    </Box>
-                                </TableCell>
-                            </TableRow>
+                            {CartData.map((cart) => (
+                                <TableRow>
+                                    <TableCell colSpan={2}>
+                                        <OrderProduct productName={cart.productName} productPrice={cart.productPrice} productImage={cart.productImage} />
+                                    </TableCell>
+                                </TableRow>
+                            ))}
                         </TableBody>
                         <TableFooter className={classes.tableFooter}>
                             <TableRow>
                                 <TableCell component="th">Subtotal</TableCell>
-                                <TableCell>35000</TableCell>
+                                <TableCell align="right"><Currency />{(35000).toLocaleString()}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell component="th">Shipping <br/>Flat Rate</TableCell>
-                                <TableCell>3000</TableCell>
+                                <TableCell align="right"><Currency />{(3000).toLocaleString()}</TableCell>
                             </TableRow>
                             <TableRow>
                                 <TableCell component="th">Total</TableCell>
-                                <TableCell>60500</TableCell>
+                                <TableCell align="right"><Currency />{(60500).toLocaleString()}</TableCell>
                             </TableRow>
                         </TableFooter>
                     </Table>
@@ -88,7 +82,7 @@ const PaymentCard = () => {
             <Box mt={5}>
                 <Typography component="p">
                     Your personal data will be used to process your order, support your experience throughout this website, 
-                    and for other purposes described in our <a href="#" target="_blank">privacy policy</a>
+                    and for other purposes described in our privacy policy
                 </Typography>
             </Box>
             <Box mt={3}>

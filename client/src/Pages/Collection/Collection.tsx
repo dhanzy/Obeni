@@ -41,7 +41,7 @@ const Collection = ():JSX.Element => {
                     <Grid item md={10} sm={10}>
                         <Grid container spacing={2}>
                             {ProductData.map((product, index) => (
-                                <Grid item md={4} sm={6} data-aos="fade-up" key={index} >
+                                <Grid item md={4} sm={6} xs={6} data-aos="fade-up" key={index} >
                                     <ProductCard image={product.image} productName={product.productName} productPrice={product.productPrice} />
                                 </Grid>
                             ))}

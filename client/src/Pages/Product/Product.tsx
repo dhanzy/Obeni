@@ -24,16 +24,17 @@ const Product = ():JSX.Element => {
     console.log(product);
     if (!product) {
         return (
-            <Box>
+            <Box style={{height: '80vh'}} display="flex" justifyContent="center" alignItems="center" flexDirection="column">
                 <Typography variant="h1">404</Typography>
+                <Typography variant="h3">Page Not Found</Typography>
             </Box>
         )
     }
 
     return (
         <Container> 
-            <Box p={2}>
-                <Box p={10}>
+            <Box px={2} py={10}>
+                <Box>
                     <Grid container spacing={2}>
                         <Grid item md={6}>
                             <Box display='flex' className={classes.productGallery}>
@@ -108,10 +109,10 @@ const Product = ():JSX.Element => {
                     <Typography variant="h2">Related Products</Typography>
                     <Box mt={2}>
                         <Grid container spacing={2}>
-                            <Grid item md={3} sm={6}>
+                            <Grid item md={3} sm={6} xs={6}>
                                 <ProductCard />
                             </Grid>
-                            <Grid item md={3} sm={6}>
+                            <Grid item md={3} sm={6} xs={6}>
                                 <ProductCard />
                             </Grid>
                             <Grid item md={3} sm={6}>

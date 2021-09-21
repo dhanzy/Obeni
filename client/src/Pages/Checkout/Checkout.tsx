@@ -1,5 +1,6 @@
 import React from 'react'
-import { Box, Grid, FormControl, Input, InputLabel } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles';
+import { Box, Grid, FormControl, Input, InputLabel, useMediaQuery } from '@material-ui/core';
 
 
 import PaymentCard from '../../components/PaymentCard/PaymentCard';
@@ -9,9 +10,12 @@ import useStyles from './useStyles';
 const Checkout = ():JSX.Element => {
     document.title = 'Ogbeni Apparels - Checkout Page'
     const classes = useStyles();
+    const theme = useTheme();
+    const small = useMediaQuery(theme.breakpoints.down('sm'));
+
 
     return (
-        <Box py={10} px={8}>
+        <Box py={10} px={!small ? 8 : 2}>
             <Grid container spacing={5}>
                 <Grid item md={8}>
                     <form method="post">
