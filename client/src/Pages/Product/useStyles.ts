@@ -1,6 +1,9 @@
 import { makeStyles } from  '@material-ui/core';
 
 const useStyles = makeStyles(()=>({
+    productPanel: {
+        width: '100%',
+    },
     productGallery: {
         overflowY: 'hidden',
     },

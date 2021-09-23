@@ -1,5 +1,6 @@
 import React from 'react';
-import { Box, Grid, Typography, Button, Card, CardMedia, Input, Container } from '@material-ui/core';
+import { Box, Grid, Typography, Button, Card, CardMedia, Input, Container, useMediaQuery } from '@material-ui/core';
+import { useTheme } from '@material-ui/core/styles'
 import { Add, Remove } from '@material-ui/icons';
 import { useParams } from 'react-router-dom';
 
@@ -19,6 +20,8 @@ const Product = ():JSX.Element => {
 
     const { productName } = useParams<ProductParams>()
     const classes = useStyles();
+    const theme = useTheme();
+    const small = useMediaQuery(theme.breakpoints.down('sm'))
 
     const product = ProductData.filter((prod: any) => { return prod.productName === productName})[0];
     console.log(product);
@@ -36,12 +39,12 @@ const Product = ():JSX.Element => {
             <Box px={2} py={10}>
                 <Box>
                     <Grid container spacing={2}>
-                        <Grid item md={6}>
-                            <Box display='flex' className={classes.productGallery}>
-                                <Box className={classes.additionalImage}>
-                                    <AdditionalImages />
-                                    <AdditionalImages />
-                                    <AdditionalImages />
+                        <Grid item md={6} className={classes.productPanel}>
+                            <Box display='flex' className={classes.productGallery} flexDirection={small ? 'column': 'row'}>
+                                <Box className={classes.additionalImage} display={small && "flex"} justifyContent={small && 'space-evenly'}>
+                                    <AdditionalImages image={product.image} />
+                                    <AdditionalImages  image={product.image} />
+                                    <AdditionalImages  image={product.image} />
                                 </Box>
                                 <Box className={classes.selectedImage}>
                                     <Card>
@@ -115,10 +118,10 @@ const Product = ():JSX.Element => {
                             <Grid item md={3} sm={6} xs={6}>
                                 <ProductCard />
                             </Grid>
-                            <Grid item md={3} sm={6}>
+                            <Grid item md={3} sm={6} xs={6}>
                                 <ProductCard />
                             </Grid>
-                            <Grid item md={3} sm={6}>
+                            <Grid item md={3} sm={6} xs={6}>
                                 <ProductCard />
                             </Grid>
                         </Grid>
