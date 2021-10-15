@@ -1,12 +1,12 @@
 import React from 'react';
 import { useTheme } from '@material-ui/core/styles';
 import { Link, useLocation } from 'react-router-dom';
-import { AppBar, Container, Toolbar, Box, Typography, Button, useScrollTrigger, Slide, useMediaQuery, IconButton, Badge, ClickAwayListener } from '@material-ui/core';
+import { AppBar, Container, Toolbar, Box, Typography, Button, useScrollTrigger, Slide, useMediaQuery, IconButton, Badge, Menu, MenuItem, ListItemIcon } from '@material-ui/core';
 import { Search, ShoppingCartOutlined } from '@material-ui/icons';
 import MenuIcon from '@material-ui/icons/Menu';
 
-import { CartData } from '../../Dummydata/Data';
 import useStyles from './useStyles';
+import { useCartContext } from '../../context/cartContext';
 
 
 interface Props {
@@ -35,17 +35,19 @@ const Navbar = (props: NavBarProps): JSX.Element => {
     const classes = useStyles();
     const location = useLocation();
     const theme = useTheme()
-    const [open, setOpen] = React.useState<boolean>(false);
-
+    const { quantity } = useCartContext()
     const medium = useMediaQuery(theme.breakpoints.down('sm'));
 
-    const handleClick = () => {
-        setOpen((prev) => !prev);
+    const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
+
+    const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+        setAnchorEl(event.currentTarget);
+    };
+
+    const handleClose = () => {
+        setAnchorEl(null);
     };
     
-    const handleClickAway = () => {
-        setOpen(false);
-    };
 
     return (
         <HideOnScroll>
@@ -60,29 +62,38 @@ const Navbar = (props: NavBarProps): JSX.Element => {
                         <Box>
                             {medium ?
                                 ( 
-                                <ClickAwayListener onClickAway={handleClickAway}>
-                                    <Box>
-                                    <IconButton style={{color:'#fff'}} onClick={handleClick} >
+                                <Box>
+                                    <IconButton
+                                        style={{color:'#fff'}} 
+                                        onClick={handleClick}
+                                        >
                                         <MenuIcon />
                                     </IconButton>
-                                    {open ? (
-                                        <Box className={classes.navlink}>
-                                            <Button component={Link} to="/men" className={location.pathname === "/men" ? 'active' : ''}>Men</Button>
-                                            <Button component={Link} to="/women" className={location.pathname === "/women" ? 'active' : ''}>Women</Button>
-                                            <Button component={Link} to="/collection" className={location.pathname === "/collection" ? 'active' : ''}>Collection</Button>
-                                            <IconButton style={{color:'#fff'}}>
-                                                <Search />
-                                            </IconButton>
-                                            <IconButton style={{color:'#fff'}} component={Link} to="/cart" className={location.pathname === "/cart" ? 'active' : ''}>
-                                                <Badge badgeContent={4} color="secondary">
+                                    <Menu
+                                        anchorEl={anchorEl}
+                                        keepMounted
+                                        open={Boolean(anchorEl)}
+                                        onClose={handleClose}
+                                        anchorOrigin={{
+                                            vertical: 'bottom',
+                                            horizontal: 'center',
+                                        }}
+                                        >
+                                            <MenuItem component={Link} to="/men" className={location.pathname === "/men" ? 'active' : ''}>Men</MenuItem>
+                                            <MenuItem component={Link} to="/women" className={location.pathname === "/women" ? 'active' : ''}>Women</MenuItem>
+                                            <MenuItem component={Link} to="/collection" className={location.pathname === "/collection" ? 'active' : ''}>Collection</MenuItem>
+                                            <MenuItem>
+                                                <ListItemIcon>
+                                                    <Search />
+                                                </ListItemIcon>
+                                            </MenuItem>
+                                            <MenuItem component={Link} to="/cart">                                            
+                                                <Badge badgeContent={quantity} color="secondary">
                                                     <ShoppingCartOutlined />
                                                 </Badge>
-                                            </IconButton>
-                                        </Box>
-                                    
-                                    ) : null}  
-                                    </Box>    
-                                </ClickAwayListener>
+                                            </MenuItem>
+                                    </Menu>
+                                </Box>    
                             ) : (
                             <Box className={classes.navlink}>
                                 <Button component={Link} to="/men" className={location.pathname === "/men" ? 'active' : ''}>Men</Button>
@@ -92,7 +103,7 @@ const Navbar = (props: NavBarProps): JSX.Element => {
                                     <Search />
                                 </IconButton>
                                 <IconButton style={{color:'#fff'}} component={Link} to="/cart" className={location.pathname === "/cart" ? 'active' : ''}>
-                                    <Badge badgeContent={CartData ? CartData.length : 0} color="secondary">
+                                    <Badge badgeContent={quantity} color="secondary">
                                         <ShoppingCartOutlined />
                                     </Badge>
                                 </IconButton>

@@ -11,7 +11,8 @@ const useStyles = makeStyles(()=>({
         flex: 1,
         marginRight: '20px',
         '& .MuiPaper-root': {
-            marginBottom: '20px',
+            margin: '0px 5px',
+            minWidth: '83px',
         }
     },
     selectedImage: {

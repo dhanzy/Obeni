@@ -11,43 +11,46 @@ import Cart from './Pages/Cart/Cart';
 import Checkout from './Pages/Checkout/Checkout'
 
 import theme from './Theme/theme';
+import { CartProvider } from './context/cartContext';
 
 const App = (): JSX.Element => {
     return (
         <MuiThemeProvider theme={theme}>
             <BrowserRouter>
-                <CssBaseline />
-                <Switch>
-                    <Route exact path="/">
-                        <Navbar />
-                        <Home />
-                    </Route>
-                    <Route exact path="/product/:productName">
-                        <Navbar dark={true} />
-                        <Product />
-                    </Route>
-                    <Route exact path="/men">
-                        <Navbar dark={true} />
-                        <Collection />
-                    </Route>
-                    <Route exact path="/women">
-                        <Navbar dark={true} />
-                        <Collection />
-                    </Route>
-                    <Route exact path="/collection">
-                        <Navbar dark={true} />
-                        <Collection />
-                    </Route>
-                    <Route exact path="/cart">
-                        <Navbar dark={true} />
-                        <Cart />
-                    </Route>
-                    <Route exact path="/checkout">
-                        <Navbar dark={true} />
-                        <Checkout />
-                    </Route>
-                </Switch>
-                <Footer />
+                <CartProvider>
+                    <CssBaseline />
+                    <Switch>
+                        <Route exact path="/">
+                            <Navbar />
+                            <Home />
+                        </Route>
+                        <Route exact path="/product/:productId">
+                            <Navbar dark={true} />
+                            <Product />
+                        </Route>
+                        <Route exact path="/men">
+                            <Navbar dark={true} />
+                            <Collection />
+                        </Route>
+                        <Route exact path="/women">
+                            <Navbar dark={true} />
+                            <Collection />
+                        </Route>
+                        <Route exact path="/collection">
+                            <Navbar dark={true} />
+                            <Collection />
+                        </Route>
+                        <Route exact path="/cart">
+                            <Navbar dark={true} />
+                            <Cart />
+                        </Route>
+                        <Route exact path="/checkout">
+                            <Navbar dark={true} />
+                            <Checkout />
+                        </Route>
+                    </Switch>
+                    <Footer />
+                </CartProvider>
             </BrowserRouter>
         </MuiThemeProvider>
     )

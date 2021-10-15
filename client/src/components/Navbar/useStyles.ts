@@ -10,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
             color: '#fff',
         },
     },
+    cssMuipaperRoot:{
+        position: 'fixed',
+    },
     navlink: {
         '& a': {
             transition: 'color .8s ease',

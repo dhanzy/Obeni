@@ -4,5 +4,6 @@ export default interface FetchOptions {
         'Content-Type': string;
     };
     body?: BodyInit;
-    credentials: RequestCredentials;
+    mode?: RequestMode;
+    credentials?: RequestCredentials;
 }

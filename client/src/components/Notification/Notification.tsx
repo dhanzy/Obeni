@@ -1,27 +1,25 @@
 import React from 'react';
-import { Popover, Box, Typography } from '@material-ui/core';
+import { Snackbar } from '@material-ui/core';
 
-const Notification = ():JSX.Element => {
-    const [anchorEl, setAnchorEl] = React.useState(null);
-    
-    const handleToggle = (event: any) => {
-        event.preventDefault();
-        if (anchorEl === null) {
-            setAnchorEl(event.currentTarget)
-        } else {
-            setAnchorEl(null)
-        }
-    }
+interface NotificationProps {
+    message: string;
+}
 
+const Notification: React.FC<NotificationProps> = (message):JSX.Element => {
+    const [open, setOpen] = React.useState<boolean>(true)
+    const handleClose = () => {
+        setOpen(false)
+    };
+    console.log('Running notification')
     return (
-        <Box>
-            <Popover 
-                open={true}
-                onClose={handleToggle}
-            >
-                <Typography></Typography>
-            </Popover>
-        </Box>
+        <>
+            <Snackbar
+                anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+                open={open}
+                onClose={handleClose}
+                message={message}
+            />
+        </>
     )
 }
 

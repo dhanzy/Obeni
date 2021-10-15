@@ -1,17 +1,51 @@
 import FetchOptions from '../Interface/FetchOptions';
 
 
-export const getProducts = async() => {
-    const fetchoptions:FetchOptions = {
+const fetchInstance = process.env.REACT_APP_API_URL;
+
+export const getProducts = async(qnew=false,qcategory=undefined,limit=0) => {
+    console.log('Running getProducts')
+    const fetchoptions: FetchOptions = {
         method: 'GET',
-        credentials: 'include'
+        headers: {
+            'Content-Type':'application/json'
+        },
+    };
+    console.log(fetchInstance)
+    let producturl = `${fetchInstance}/product/`
+    if (qnew && limit){
+        producturl += `?new=true&limit=${limit.toString()}`
     }
-    return await fetch('//', fetchoptions)
+    else if (qcategory && limit){
+        producturl += `?category=${qcategory}&limit=${limit.toString()}`
+    }
+    else if(qcategory){
+        producturl += `?category=${qcategory}`
+    }
+    else if (qnew){
+        producturl += '?new=true'
+    }
+    else if (limit){
+        producturl += `?limit=${limit.toString()}`
+    }
+    return await fetch(producturl, fetchoptions)
         .then((res) => res.json())
         .catch((err) => ({
-            error: {message: 'Unable to connet to server'}
+            error: {message: `Unable to connect to server: ${err}`}
         }))
 }
+
+export const getProductById = async(productId:string) => {
+    const fetchoptions: FetchOptions = {
+        method: 'GET',
+    };
+    return await fetch(`${fetchInstance}/product/${productId}`, fetchoptions)
+        .then((res) => res.json())
+        .catch((err) => ({
+            error: {message: `Unable to connet to server: ${err}`}
+        }))
+}
+
 
 export const addProduct = async() => {
     const fetchOptions:FetchOptions = {
@@ -19,26 +53,25 @@ export const addProduct = async() => {
         headers: {
             'Content-Type':'application/json'
         },
-        credentials: 'include'
     };
-    return await fetch('//', fetchOptions)
+    return await fetch(`${fetchInstance}/product`, fetchOptions)
         .then((res) => res.json())
         .catch(() => ({
             error: { message: 'Unable to add product to cart' }
         }))
 }
 
-export const updateCart = async() => {
-    const fetchoptions:FetchOptions = {
-        method: 'POST',
+export const getProductByCategory = async(cat: string, limit: number|null =null) => {
+    const fetchOptions:FetchOptions = {
+        method: "GET", 
         headers: {
-            'Content-Type': 'application/json'
+            'Content-Type':'application/json'
         },
-        credentials: 'include',
-    }
-    return await fetch('//', fetchoptions)
+    };
+    return await fetch(limit !== null ? `${fetchInstance}/product/?category=${cat}&limit=${limit}` : `${fetchInstance}/product/?category=${cat}`, fetchOptions)
         .then((res) => res.json())
-        .catch((err) => ({
-            error: { message: 'Unable to update Cart' }
-        }))
+        .catch(() => ({
+            error: { message: 'Unable to add product to cart' }
+    }))
 }
+

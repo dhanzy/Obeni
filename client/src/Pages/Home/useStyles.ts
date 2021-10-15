@@ -19,6 +19,7 @@ const useStyles = makeStyles((theme) => ({
             width: '100%',
             height: '100%',
             objectFit: 'cover',
+            transition: 'scale 1s ease, opacity .2s ease',
         },
     },
     mainDesc: {

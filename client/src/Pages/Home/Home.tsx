@@ -1,12 +1,17 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Box, Typography, Button, Grid, Card, CardActionArea, CardMedia, CardContent, Tabs, Tab, Fade, Grow } from '@material-ui/core';
+import { Box, Typography, Button, Grid, Card, CardActionArea, CardMedia, CardContent, Tabs, Tab, Grow } from '@material-ui/core';
+import { useTransition, animated } from 'react-spring';
+import useInterval from '../../components/useInterval/useInterval';
+
 import Sensor from '../../components/Sensor/Sensor';
-import { MenData, WomenData } from '../../Dummydata/Data';
+// import { MenData, WomenData } from '../../Dummydata/Data';
 
 // import { Zoom, Fade} from 'react-reveal';
 
 import useStyles from './useStyles';
+import { getProductByCategory } from '../../ApiCalls/Product';
+import Product from '../../Interface/Product';
 import ProductCard from '../../components/ProductCard/ProductCard';
 
 interface TabPanelProps {
@@ -26,19 +31,68 @@ function TabPanel
     );
 }
 
+const listItems = [
+        {id: 0, url:'https://images.pexels.com/photos/432059/pexels-photo-432059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940'},
+        {id: 1, url:'https://images.pexels.com/photos/4904563/pexels-photo-4904563.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'},
+        {id: 2, url:'https://images.pexels.com/photos/351265/pexels-photo-351265.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260'},
+        {id: 3, url:'https://images.pexels.com/photos/8271460/pexels-photo-8271460.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500'}
+    ]
+
 const Home = ():JSX.Element => {
     const classes = useStyles();
     const [value, setValue] = React.useState(0);
+    const [index, setIndex] = React.useState(0);
+    const [menProduct, setMenProduct] = React.useState<Product[] | []>([]);
+    const [womenProduct, setWomenProduct] = React.useState<Product[] | []>([]);
+
+    const increment = () => setIndex(state => (state + 1) % listItems.length) 
+    useInterval(increment, 5000);
+
+    const transitions = useTransition(listItems[index], {
+        keys: item=>item.id,
+        from: {opacity: 0, transform: 'scale(1.1)'},
+        enter: {opacity: 1, transform: 'scale(1)'},
+        leave: {opacity: 0, transform: 'scale(0.9)'}
+    })
     const handleChange = (event: React.ChangeEvent<unknown>, newValue: number) => {
         setValue(newValue);
     }
 
+    React.useEffect(()=> {
+        const fetchProducts = async() => {
+            const response = await getProductByCategory('men',4);
+            if (response){
+                if (response.success){
+                    const products:Product[] = response.success
+                    setMenProduct(products)
+                }
+            }
+        }
+        fetchProducts();
+
+    }, [])
+
+    React.useEffect(()=> {
+        const fetchProducts = async() => {
+            const response = await getProductByCategory('women',4);
+            if (response){
+                if (response.success){
+                    const products:Product[] = response.success
+                    setWomenProduct(products)
+                }
+            }
+        }
+        fetchProducts();
+
+    }, [])
+
+
     return (
         <Box className={classes.root}>
                 <Box className={[classes.section, classes.homeSection].join(' ')}>
-                    <Fade in={true} {...(true ? { timeout: 2000 } : {})} >
-                        <CardMedia component="img" image="https://images.pexels.com/photos/432059/pexels-photo-432059.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940" />
-                    </Fade>
+                    {transitions((style, item) => (
+                        <animated.img src={item.url} className={['MuiCardMedia-root','MuiCardMedia-media', 'MuiCardMedia-img'].join(' ')} style={style} alt="" />
+                    ))}
                     <Box className={classes.mainDesc}>
                         <Typography variant="h1" color="secondary">Summer<br/>Collection</Typography>
                         <Typography component="p">Introducing the most comfortable and popular brand ogbeni apparels collection</Typography>
@@ -121,18 +175,18 @@ const Home = ():JSX.Element => {
                         <Box>
                             <TabPanel index={0} value={value}>
                                 <Grid container spacing={2}>
-                                    {MenData.map((product, index) => (
+                                    {menProduct.map((product, index) => (
                                         <Grid item md={3} sm={6} xs={12} key={index}>
-                                            <ProductCard productPrice={product.productPrice} image={product.image} productName={product.productName} />
+                                            <ProductCard price={product.price} image={product.image} title={product.title} _id={product._id}/>
                                         </Grid>
                                     ))}
                                 </Grid>
                             </TabPanel>
                             <TabPanel index={1} value={value}>
                                 <Grid container spacing={2}>
-                                    {WomenData.map((product, index) => (
+                                    {womenProduct.map((product, index) => (
                                         <Grid item md={3} sm={6} xs={12} key={index}>
-                                            <ProductCard image={product.image} productPrice={product.productPrice} productName={product.productName} />
+                                            <ProductCard image={product.image} price={product.price} title={product.title} _id={product._id} />
                                         </Grid>
                                     ))}
                                 </Grid>

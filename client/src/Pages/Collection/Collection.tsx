@@ -1,14 +1,36 @@
 import React from 'react'
 import { Box, Grid, Typography, CardMedia, ButtonGroup, Button } from '@material-ui/core';
 import AOS from 'aos';
+
 import 'aos/dist/aos.css';
 
 import useStyles from './useStyles';
 import ProductCard from '../../components/ProductCard/ProductCard'
-import { ProductData } from '../../Dummydata/Data';
+import ProductCardSk from '../../components/Skeleton/ProductCardSk'
+import { getProducts } from '../../ApiCalls/Product';
+
+import Product from '../../Interface/Product';
 
 const Collection = ():JSX.Element => {
     const classes = useStyles();
+    const [products, setProducts] = React.useState<Product[] | []>([]);
+    const [isLoading, setIsLoading] = React.useState<boolean>(true)
+    const COUNTER = 6;
+    React.useEffect(()=> {
+        const fetchProducts = async() => {
+            const response = await getProducts();
+            console.log('printing response')
+            console.log(response);
+            if (response){
+                if (response.success){
+                    setProducts(response.success);
+                    setIsLoading(false);
+                }
+            }
+        }
+        fetchProducts();
+
+    }, [])
     AOS.init({
         offset: 200,
         duration: 600,
@@ -40,20 +62,30 @@ const Collection = ():JSX.Element => {
                     </Grid>
                     <Grid item md={10} sm={10}>
                         <Grid container spacing={2}>
-                            {ProductData.map((product, index) => (
-                                <Grid item md={4} sm={6} xs={6} data-aos="fade-up" key={index} >
-                                    <ProductCard image={product.image} productName={product.productName} productPrice={product.productPrice} />
-                                </Grid>
-                            ))}
+                            {isLoading ? 
+                                Array(COUNTER).fill(
+                                    <Grid item md={4} sm={6}>
+                                        <ProductCardSk />
+                                    </Grid>
+                                )
+                                :
+                                products.map((product) => (
+                                    <Grid item md={4} sm={6} xs={6} data-aos="fade-up" key={product.title} >
+                                        <ProductCard image={product.image} title={product.title} price={product.price} _id={product._id} />
+                                    </Grid>
+                                ))
+                            } 
                         </Grid>
 
-                        <Box py={5} display="flex" justifyContent="center">
-                            <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
-                                <Button>One</Button>
-                                <Button>Two</Button>
-                                <Button>Three</Button>
-                            </ButtonGroup>
-                        </Box>
+                        {!isLoading && 
+                            <Box py={5} display="flex" justifyContent="center">
+                                <ButtonGroup size="large" color="primary" aria-label="large outlined primary button group">
+                                    <Button>One</Button>
+                                    <Button>Two</Button>
+                                    <Button>Three</Button>
+                                </ButtonGroup>
+                            </Box>
+                        }
                     </Grid>
                 </Grid>
             </Box>
