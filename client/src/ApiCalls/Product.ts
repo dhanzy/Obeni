@@ -3,15 +3,13 @@ import FetchOptions from '../Interface/FetchOptions';
 
 const fetchInstance = process.env.REACT_APP_API_URL;
 
-export const getProducts = async(qnew=false,qcategory=undefined,limit=0) => {
-    console.log('Running getProducts')
+export const getProducts = async(qnew: boolean=false,qcategory: undefined | string=undefined,limit: number=0) => {
     const fetchoptions: FetchOptions = {
         method: 'GET',
         headers: {
             'Content-Type':'application/json'
         },
     };
-    console.log(fetchInstance)
     let producturl = `${fetchInstance}/product/`
     if (qnew && limit){
         producturl += `?new=true&limit=${limit.toString()}`
@@ -75,3 +73,17 @@ export const getProductByCategory = async(cat: string, limit: number|null =null)
     }))
 }
 
+
+export const getTopProducts = async(limit: number|null =null) => {
+    const fetchOptions:FetchOptions = {
+        method: "GET", 
+        headers: {
+            'Content-Type':'application/json'
+        },
+    };
+    return await fetch(limit !== null ? `${fetchInstance}/analytics/top/?limit=${limit}` : `${fetchInstance}/analytics/top`, fetchOptions)
+        .then((res) => res.json())
+        .catch(() => ({
+            error: { message: 'Unable to add product to cart' }
+    }))
+}

@@ -28,14 +28,6 @@ const App = (): JSX.Element => {
                             <Navbar dark={true} />
                             <Product />
                         </Route>
-                        <Route exact path="/men">
-                            <Navbar dark={true} />
-                            <Collection />
-                        </Route>
-                        <Route exact path="/women">
-                            <Navbar dark={true} />
-                            <Collection />
-                        </Route>
                         <Route exact path="/collection">
                             <Navbar dark={true} />
                             <Collection />
@@ -47,6 +39,10 @@ const App = (): JSX.Element => {
                         <Route exact path="/checkout">
                             <Navbar dark={true} />
                             <Checkout />
+                        </Route>
+                        <Route exact path="/:category">
+                            <Navbar dark={true} />
+                            <Collection />
                         </Route>
                     </Switch>
                     <Footer />

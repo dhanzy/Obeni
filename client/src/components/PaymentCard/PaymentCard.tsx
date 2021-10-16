@@ -20,8 +20,8 @@ const PaymentCard = () => {
                 <TableContainer>
                     <Table>
                         <TableBody>
-                            {cart.map((data) => (
-                                <TableRow>
+                            {cart.map((data, index) => (
+                                <TableRow key={`${data.title}-${index}`}>
                                     <TableCell colSpan={2}>
                                         <OrderProduct title={data.title} price={data.price} image={data.image} quantity={data.quantity} />
                                     </TableCell>

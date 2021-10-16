@@ -1,6 +1,7 @@
 import React from 'react'
 import { Box, Grid, Typography, CardMedia, ButtonGroup, Button } from '@material-ui/core';
 import AOS from 'aos';
+import { useParams } from 'react-router-dom';
 
 import 'aos/dist/aos.css';
 
@@ -13,24 +14,34 @@ import Product from '../../Interface/Product';
 
 const Collection = ():JSX.Element => {
     const classes = useStyles();
+    const {category } = useParams<{category?: string}>();
     const [products, setProducts] = React.useState<Product[] | []>([]);
     const [isLoading, setIsLoading] = React.useState<boolean>(true)
     const COUNTER = 6;
     React.useEffect(()=> {
         const fetchProducts = async() => {
-            const response = await getProducts();
-            console.log('printing response')
-            console.log(response);
-            if (response){
-                if (response.success){
-                    setProducts(response.success);
-                    setIsLoading(false);
+            if (category){
+                const response = await getProducts(false,category);
+                if (response){
+                    if (response.success){
+                        setProducts(response.success);
+                        setIsLoading(false);
+                    }
+                }
+            }
+            else{
+                const response = await getProducts();
+                if (response){
+                    if (response.success){
+                        setProducts(response.success);
+                        setIsLoading(false);
+                    }
                 }
             }
         }
         fetchProducts();
 
-    }, [])
+    }, [category])
     AOS.init({
         offset: 200,
         duration: 600,
@@ -63,11 +74,11 @@ const Collection = ():JSX.Element => {
                     <Grid item md={10} sm={10}>
                         <Grid container spacing={2}>
                             {isLoading ? 
-                                Array(COUNTER).fill(
-                                    <Grid item md={4} sm={6}>
+                                Array.from(Array(COUNTER), (_, i) =>(
+                                    <Grid item md={4} sm={6} key={i}>
                                         <ProductCardSk />
                                     </Grid>
-                                )
+                                ))
                                 :
                                 products.map((product) => (
                                     <Grid item md={4} sm={6} xs={6} data-aos="fade-up" key={product.title} >

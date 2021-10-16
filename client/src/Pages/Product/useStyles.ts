@@ -8,6 +8,7 @@ const useStyles = makeStyles(()=>({
         overflowY: 'hidden',
     },
     additionalImage: {
+        display: 'flex',
         flex: 1,
         marginRight: '20px',
         '& .MuiPaper-root': {

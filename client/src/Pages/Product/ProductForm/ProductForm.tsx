@@ -35,9 +35,7 @@ const ProductForm: React.FC<ProductParams> = ({product, handleSubmit}): JSX.Elem
                     <Box ml={2}>
                         <RadioGroup row name="selectedSize">
                         {product.size.map((s, index)=>(
-                            <>
-                                <FormControlLabel key={`${s}-${index}`} value={s} control={<Radio />} label={s} onChange={handleChange} className={values.selectedSize === s ? 'active' : ''} />
-                            </>
+                            <FormControlLabel key={`${s}-${index}`} value={s} control={<Radio />} label={s} onChange={handleChange} className={values.selectedSize === s ? 'active' : ''} />
                         ))}
                         </RadioGroup>
                     </Box>

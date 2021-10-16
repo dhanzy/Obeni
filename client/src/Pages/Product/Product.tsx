@@ -82,7 +82,7 @@ const Product = ():JSX.Element => {
                                         <Card>
                                             <CardMedia component="img" image={product.image} height={small ? "700" : "400"} />
                                         </Card>
-                                        <Box mt={1} className={classes.additionalImage} display="flex" justifyContent={xsmall && 'space-evenly'}>
+                                        <Box mt={1} className={classes.additionalImage}>
                                             <AdditionalImages image={product.image} />
                                             <AdditionalImages  image={product.image} />
                                             <AdditionalImages  image={product.image} />

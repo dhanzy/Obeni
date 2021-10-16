@@ -1,12 +1,10 @@
 import React from 'react'
-import { Box, Grid, Typography, useTheme, useMediaQuery } from '@material-ui/core';
+import { Box, Grid, Typography } from '@material-ui/core';
 
 import useStyles from './productStyles';
 
 const ProductSk = () => {
     const classes = useStyles();
-    const theme = useTheme();
-    const xsmall = useMediaQuery(theme.breakpoints.down('xs'))
 
 
     return (
@@ -17,7 +15,7 @@ const ProductSk = () => {
                         <Box className={classes.selectedImage}>
                             <Box height="700" className="cardImg"></Box>
                         </Box>
-                        <Box className={classes.additionalImage} display={"flex"} justifyContent={xsmall && 'space-evenly'}>
+                        <Box className={classes.additionalImage}>
                             <Box></Box>
                             <Box></Box>
                         </Box>
